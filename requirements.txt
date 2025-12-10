@@ -1,6 +1,8 @@
-fastapi
-uvicorn
-dashscope
-tavily-python
-pydantic
-python-dotenv
+fastapi==0.95.2
+uvicorn[standard]==0.22.0
+gunicorn==21.2.0
+tavily-python==0.7.14
+dashscope==1.25.2
+python-dotenv==1.2.1
+pydantic==2.12.5
+httpx==0.28.1
