@@ -18,7 +18,15 @@ import dashscope
 from tavily import TavilyClient
 
 dashscope.api_key = DASHSCOPE_API_KEY
-tavily = TavilyClient(api_key=TAVILY_API_KEY)
+tavily = None
+try:
+    if TAVILY_API_KEY:
+        tavily = TavilyClient(api_key=TAVILY_API_KEY)
+    else:
+        print("⚠️ 警告：TAVILY_API_KEY 未设置，搜索功能将不可用（程序可继续运行以便调试）。")
+except Exception as e:
+    print("⚠️ 初始化 TavilyClient 失败：", e)
+    tavily = None
 
 app = FastAPI()
 
@@ -314,4 +322,6 @@ async def read_root():
     """
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    # 本地测试时可用（Render 会用 gunicorn 启动服务）
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
